@@ -32,5 +32,5 @@ python main.py
 
 Checkout Contribution.md.
 
-This repo accept Hacktoberfest PR.
+This repo accepts Hacktoberfest PR.
 
