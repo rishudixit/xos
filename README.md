@@ -1,3 +1,4 @@
+[![forthebadge](https://forthebadge.com/images/badges/made-with-python.svg)](https://forthebadge.com)
 # Tic-Tac-Toe
 
 This repository contains python based interactive Tic-Tac-Toe game.
@@ -8,6 +9,11 @@ This repository contains python based interactive Tic-Tac-Toe game.
 git clone https://github.com/rishudixit/xos.git
 cd Tic-Tac-Toe
 python main.py
+```
+Or, 
+
+```
+git clone https://github.com/rishudixit/xos.git && cd Tic-Tac-Toe && python main.py
 ```
 
 <!-- <p align="center">
