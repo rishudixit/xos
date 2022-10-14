@@ -18,6 +18,7 @@ class Tic_Tac_Toe():
         self.window.title('Tic-Tac-Toe')
         self.canvas = Canvas(self.window, width=size_of_board, height=size_of_board)
         self.canvas.pack()
+        self.window.iconbitmap("icon.ico")
         # Input from user in form of clicks
         self.window.bind('<Button-1>', self.click)
 
