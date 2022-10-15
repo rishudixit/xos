@@ -1,5 +1,10 @@
 from tkinter import *
+import customtkinter
 import numpy as np
+
+customtkinter.set_appearance_mode("System")  # Modes: system (default), light, dark
+customtkinter.set_default_color_theme("blue")  # Themes: blue (default), dark-blue, green
+
 
 size_of_board = 600
 symbol_size = (size_of_board / 3 - size_of_board / 8) / 2
@@ -21,6 +26,8 @@ class Tic_Tac_Toe():
         self.window.iconbitmap("icon.ico")
         # Input from user in form of clicks
         self.window.bind('<Button-1>', self.click)
+        self.window.eval('tk::PlaceWindow . center')
+
 
         self.initialize_board()
         self.player_X_turns = True
@@ -207,5 +214,53 @@ class Tic_Tac_Toe():
             self.reset_board = False
 
 
-game_instance = Tic_Tac_Toe()
-game_instance.mainloop()
+class Mainmenu:
+
+    def __init__(self):
+
+        menuWidth = 500
+        menuHeight = 400
+
+        geoString = str(menuWidth) + 'x' + str(menuHeight)
+
+        global app
+        app = customtkinter.CTk()  # create CTk window like you do with the Tk window
+        app.title('Tic-Tac-Toe')
+        app.geometry(geoString)
+
+        app.iconbitmap("icon.ico")
+
+        app.eval('tk::PlaceWindow %s center' % app.winfo_toplevel())
+
+        button = customtkinter.CTkButton(master=app, text="Start", command=self.start_function)
+        button.place(relx=0.5, rely=0.5, anchor=customtkinter.CENTER, height=50)
+
+        button = customtkinter.CTkButton(master=app, text="Exit", command=self.exit_function)
+        button.place(relx=0.5, rely=0.7, anchor=customtkinter.CENTER,height=50)
+        button.click_animation()
+
+        headLabel = customtkinter.CTkLabel(text="Tic Tac Toe",text_font="cmr 40 bold")
+        headLabel.place(relx=0.5,rely=0.2,anchor=customtkinter.CENTER)
+
+
+        app.mainloop()
+    
+    def exit_function(self):
+        exit()
+
+    def start_function(self):
+        # print("button pressed")
+        app.destroy()
+        game_instance = Tic_Tac_Toe()
+        game_instance.mainloop()
+
+
+    def mainloop(self):
+        self.window.mainloop()
+
+    def click(self, event):
+        pass
+
+
+menu_instance = Mainmenu()
+
