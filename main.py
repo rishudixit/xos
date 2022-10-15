@@ -2,6 +2,7 @@ from tkinter import *
 import customtkinter
 import numpy as np
 import random
+import webbrowser
 
 customtkinter.set_appearance_mode("System")  # Modes: system (default), light, dark
 customtkinter.set_default_color_theme("blue")  # Themes: blue (default), dark-blue, green
@@ -500,10 +501,14 @@ class Mainmenu:
         button.place(relx=0.5, rely=0.4, anchor=customtkinter.CENTER, height=50)
 
         button = customtkinter.CTkButton(master=app, text="VS Computer", command=self.play_with_computer)
-        button.place(relx=0.5, rely=0.6, anchor=customtkinter.CENTER, height=50)
+        button.place(relx=0.5, rely=0.55, anchor=customtkinter.CENTER, height=50)
+
+        
+        button = customtkinter.CTkButton(master=app, text="Help", command=self.help_function)
+        button.place(relx=0.5, rely=0.7, anchor=customtkinter.CENTER, height=50)
 
         button = customtkinter.CTkButton(master=app, text="Exit", command=self.exit_function)
-        button.place(relx=0.5, rely=0.8, anchor=customtkinter.CENTER,height=50)
+        button.place(relx=0.5, rely=0.85, anchor=customtkinter.CENTER,height=50)
         button.click_animation()
 
         headLabel = customtkinter.CTkLabel(text="Tic Tac Toe",text_font="cmr 40 bold")
@@ -512,6 +517,10 @@ class Mainmenu:
 
         app.mainloop()
     
+    def help_function(self):
+        webbrowser.open("https://www.wikihow.com/Play-Tic-Tac-Toe")
+
+
     def exit_function(self):
         exit()
 
