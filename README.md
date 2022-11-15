@@ -16,6 +16,11 @@ Or,
 git clone https://github.com/rishudixit/xos.git && cd Tic-Tac-Toe && python main.py
 ```
 
+### Requirements 
+```python
+pip install tk customtkinter 
+```
+
 <!-- <p align="center">
 <img src="/images/preview.gif">
 </p> -->
