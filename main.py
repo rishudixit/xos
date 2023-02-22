@@ -511,7 +511,7 @@ class Mainmenu:
         button.place(relx=0.5, rely=0.85, anchor=customtkinter.CENTER)
         button._click_animation()
 
-        headLabel = customtkinter.CTkLabel(master=app, text="Tic Tac Toe")
+        headLabel = customtkinter.CTkLabel(master=app, text="Tic Tac Toe", font=("cmr", 40))
         headLabel.place(relx=0.5,rely=0.2,anchor=customtkinter.CENTER)
 
 
