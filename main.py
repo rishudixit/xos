@@ -25,7 +25,7 @@ class Tic_Tac_Toe():
         self.window.title('Tic-Tac-Toe')
         self.canvas = Canvas(self.window, width=size_of_board, height=size_of_board)
         self.canvas.pack()
-        self.window.iconbitmap("icon.ico")
+        # self.window.iconbitmap("icon.ico")
         # Input from user in form of clicks
         self.window.bind('<Button-1>', self.click)
         self.window.eval('tk::PlaceWindow . center')
@@ -238,7 +238,7 @@ class Tic_Tac_ToeVSComputer():
         self.window.title('Tic-Tac-Toe')
         self.canvas = Canvas(self.window, width=size_of_board, height=size_of_board)
         self.canvas.pack()
-        self.window.iconbitmap("icon.ico")
+        # self.window.iconbitmap("icon.ico")
         # Input from user in form of clicks
         self.window.bind('<Button-1>', self.click)
         self.window.eval('tk::PlaceWindow . center')
@@ -493,25 +493,25 @@ class Mainmenu:
         app.title('Tic-Tac-Toe')
         app.geometry(geoString)
 
-        app.iconbitmap("icon.ico")
+        # app.iconbitmap("icon.ico")
 
         app.eval('tk::PlaceWindow %s center' % app.winfo_toplevel())
 
-        button = customtkinter.CTkButton(master=app, text="VS Player", command=self.play_with_player)
-        button.place(relx=0.5, rely=0.4, anchor=customtkinter.CENTER, height=50)
+        button = customtkinter.CTkButton(master=app, text="VS Player", command=self.play_with_player, height=50)
+        button.place(relx=0.5, rely=0.4, anchor=customtkinter.CENTER)
 
-        button = customtkinter.CTkButton(master=app, text="VS Computer", command=self.play_with_computer)
-        button.place(relx=0.5, rely=0.55, anchor=customtkinter.CENTER, height=50)
+        button = customtkinter.CTkButton(master=app, text="VS Computer", command=self.play_with_computer, height=50)
+        button.place(relx=0.5, rely=0.55, anchor=customtkinter.CENTER)
 
         
-        button = customtkinter.CTkButton(master=app, text="Help", command=self.help_function)
-        button.place(relx=0.5, rely=0.7, anchor=customtkinter.CENTER, height=50)
+        button = customtkinter.CTkButton(master=app, text="Help", command=self.help_function, height=50)
+        button.place(relx=0.5, rely=0.7, anchor=customtkinter.CENTER)
 
-        button = customtkinter.CTkButton(master=app, text="Exit", command=self.exit_function)
-        button.place(relx=0.5, rely=0.85, anchor=customtkinter.CENTER,height=50)
-        button.click_animation()
+        button = customtkinter.CTkButton(master=app, text="Exit", command=self.exit_function, height=50)
+        button.place(relx=0.5, rely=0.85, anchor=customtkinter.CENTER)
+        button._click_animation()
 
-        headLabel = customtkinter.CTkLabel(text="Tic Tac Toe",text_font="cmr 40 bold")
+        headLabel = customtkinter.CTkLabel(master=app, text="Tic Tac Toe")
         headLabel.place(relx=0.5,rely=0.2,anchor=customtkinter.CENTER)
 
 
@@ -536,11 +536,11 @@ class Mainmenu:
         game_instance.mainloop()
 
 
-    def mainloop(self):
-        self.window.mainloop()
+    # def mainloop(self):
+    #     self.window.mainloop()
 
-    def click(self, event):
-        pass
+    # def click(self, event):
+    #     pass
 
 
 menu_instance = Mainmenu()
