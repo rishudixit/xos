@@ -25,7 +25,7 @@ class Tic_Tac_Toe():
         self.window.title('Tic-Tac-Toe')
         self.canvas = Canvas(self.window, width=size_of_board, height=size_of_board)
         self.canvas.pack()
-        self.window.iconbitmap("icon.ico")
+        # self.window.iconbitmap("icon.ico")
         # Input from user in form of clicks
         self.window.bind('<Button-1>', self.click)
         self.window.eval('tk::PlaceWindow . center')
@@ -37,7 +37,7 @@ class Tic_Tac_Toe():
 
         self.player_X_starts = True
         self.reset_board = False
-        self.gameover = False
+        self.show_result = False
         self.tie = False
         self.X_wins = False
         self.O_wins = False
@@ -179,8 +179,7 @@ class Tic_Tac_Toe():
         self.X_wins = self.is_winner('X')
         if not self.X_wins:
             self.O_wins = self.is_winner('O')
-
-        if not self.O_wins:
+        if not self.O_wins and not self.X_wins:
             self.tie = self.is_tie()
 
         gameover = self.X_wins or self.O_wins or self.tie
@@ -195,14 +194,50 @@ class Tic_Tac_Toe():
         return gameover
 
 
+    def find_row_end_line(self):
+        for row in range(3):
+            if self.board_status[row][row] == 0:
+                continue
+            elif len(set(list([self.board_status[0][row], self.board_status[1][row], self.board_status[2][row]]))) == 1:
+                return ([0, row], [2, row])
+            elif len(set(list([self.board_status[row][0], self.board_status[row][1], self.board_status[row][2]]))) == 1:
+                return ([row, 0], [row, 2])
+        if len(set(list([self.board_status[0][0], self.board_status[1][1], self.board_status[2][2]]))) == 1:
+            return ([0, 0], [2, 2])
+        elif len(set(list([self.board_status[0][2], self.board_status[1][1], self.board_status[2][0]]))) == 1:
+            return ([0, 2], [2, 0])
 
+    def expand_end_line(self, logical_init_line, logical_end_line, grid_init_line, grid_end_line):
+        expand_line = (size_of_board / 3) / 2
+        if logical_init_line == [0, 2] and logical_end_line == [2, 0]:
+            grid_init_line[1] += expand_line
+            grid_end_line[1] -= expand_line
+        elif logical_init_line[1] != logical_end_line[1]:
+            grid_init_line[1] -= expand_line
+            grid_end_line[1] += expand_line
+        if logical_init_line[0] != logical_end_line[0]:
+            grid_init_line[0] -= expand_line
+            grid_end_line[0] += expand_line
+        return (grid_init_line, grid_end_line)
 
+    def display_end_line(self):
+        if not self.tie:
+            logical_init_line, logical_end_line = self.find_row_end_line()
+            grid_init_line = self.convert_logical_to_grid_position(logical_init_line)
+            grid_end_line = self.convert_logical_to_grid_position(logical_end_line)
+
+            grid_init_line, grid_end_line = self.expand_end_line(logical_init_line, logical_end_line, grid_init_line, grid_end_line)
+
+            self.canvas.create_line(grid_init_line[0], grid_init_line[1], grid_end_line[0], grid_end_line[1], width=10)
+
+        text = "Click to continue"
+        self.canvas.create_text(size_of_board / 2, size_of_board / 2, font="cmr 30 bold", text=text, width=size_of_board, fill=Green_color)
 
     def click(self, event):
         grid_position = [event.x, event.y]
         logical_position = self.convert_grid_to_logical_position(grid_position)
 
-        if not self.reset_board:
+        if not self.reset_board and not self.show_result:
             if self.player_X_turns:
                 if not self.is_grid_occupied(logical_position):
                     self.draw_X(logical_position)
@@ -216,14 +251,18 @@ class Tic_Tac_Toe():
 
             # Check if game is concluded
             if self.is_gameover():
-                self.display_gameover()
+                self.show_result = True
+                self.display_end_line()
                 # print('Done')
-        else:  # Play Again
+
+        elif self.show_result:
+            self.show_result = False
+            self.display_gameover()
+        
+        elif self.reset_board:  # Play Again
             self.canvas.delete("all")
             self.play_again()
             self.reset_board = False
-
-
 
 
 
@@ -238,7 +277,7 @@ class Tic_Tac_ToeVSComputer():
         self.window.title('Tic-Tac-Toe')
         self.canvas = Canvas(self.window, width=size_of_board, height=size_of_board)
         self.canvas.pack()
-        self.window.iconbitmap("icon.ico")
+        # self.window.iconbitmap("icon.ico")
         # Input from user in form of clicks
         self.window.bind('<Button-1>', self.click)
         self.window.eval('tk::PlaceWindow . center')
@@ -250,7 +289,7 @@ class Tic_Tac_ToeVSComputer():
 
         self.player_X_starts = True
         self.reset_board = False
-        self.gameover = False
+        self.show_result = False
         self.tie = False
         self.X_wins = False
         self.O_wins = False
@@ -432,7 +471,7 @@ class Tic_Tac_ToeVSComputer():
         if not self.X_wins:
             self.O_wins = self.is_winner('O')
 
-        if not self.O_wins:
+        if not self.O_wins and not self.X_wins:
             self.tie = self.is_tie()
 
         gameover = self.X_wins or self.O_wins or self.tie
@@ -447,15 +486,51 @@ class Tic_Tac_ToeVSComputer():
         return gameover
 
 
+    def find_row_end_line(self):
+        for row in range(3):
+            if self.board_status[row][row] == 0:
+                continue
+            elif len(set(list([self.board_status[0][row], self.board_status[1][row], self.board_status[2][row]]))) == 1:
+                return ([0, row], [2, row])
+            elif len(set(list([self.board_status[row][0], self.board_status[row][1], self.board_status[row][2]]))) == 1:
+                return ([row, 0], [row, 2])
+        if len(set(list([self.board_status[0][0], self.board_status[1][1], self.board_status[2][2]]))) == 1:
+            return ([0, 0], [2, 2])
+        elif len(set(list([self.board_status[0][2], self.board_status[1][1], self.board_status[2][0]]))) == 1:
+            return ([0, 2], [2, 0])
 
+    def expand_end_line(self, logical_init_line, logical_end_line, grid_init_line, grid_end_line):
+        expand_line = (size_of_board / 3) / 2
+        if logical_init_line == [0, 2] and logical_end_line == [2, 0]:
+            grid_init_line[1] += expand_line
+            grid_end_line[1] -= expand_line
+        elif logical_init_line[1] != logical_end_line[1]:
+            grid_init_line[1] -= expand_line
+            grid_end_line[1] += expand_line
+        if logical_init_line[0] != logical_end_line[0]:
+            grid_init_line[0] -= expand_line
+            grid_end_line[0] += expand_line
+        return (grid_init_line, grid_end_line)
 
+    def display_end_line(self):
+        if not self.tie:
+            logical_init_line, logical_end_line = self.find_row_end_line()
+            grid_init_line = self.convert_logical_to_grid_position(logical_init_line)
+            grid_end_line = self.convert_logical_to_grid_position(logical_end_line)
+
+            grid_init_line, grid_end_line = self.expand_end_line(logical_init_line, logical_end_line, grid_init_line, grid_end_line)
+
+            self.canvas.create_line(grid_init_line[0], grid_init_line[1], grid_end_line[0], grid_end_line[1], width=10)
+            
+        text = "Click to continue"
+        self.canvas.create_text(size_of_board / 2, size_of_board / 2, font="cmr 30 bold", text=text, width=size_of_board, fill=Green_color)
 
     def click(self, event):
         grid_position = [event.x, event.y]
         logical_position = self.convert_grid_to_logical_position(grid_position)
 
 
-        if not self.reset_board:
+        if not self.reset_board and not self.show_result:
             if self.player_X_turns:
                 self.computerChance()
             else:
@@ -466,12 +541,19 @@ class Tic_Tac_ToeVSComputer():
 
             # Check if game is concluded
             if self.is_gameover():
-                self.display_gameover()
+                self.show_result = True
+                self.display_end_line()
                 # print('Done')
-        else:  # Play Again
+
+        elif self.show_result:
+            self.show_result = False
+            self.display_gameover()
+        
+        elif self.reset_board:  # Play Again
             self.canvas.delete("all")
             self.play_again()
             self.reset_board = False
+
 
 
 
@@ -493,25 +575,25 @@ class Mainmenu:
         app.title('Tic-Tac-Toe')
         app.geometry(geoString)
 
-        app.iconbitmap("icon.ico")
+        # app.iconbitmap("icon.ico")
 
         app.eval('tk::PlaceWindow %s center' % app.winfo_toplevel())
 
-        button = customtkinter.CTkButton(master=app, text="VS Player", command=self.play_with_player)
-        button.place(relx=0.5, rely=0.4, anchor=customtkinter.CENTER, height=50)
+        button = customtkinter.CTkButton(master=app, text="VS Player", command=self.play_with_player, height=50)
+        button.place(relx=0.5, rely=0.4, anchor=customtkinter.CENTER)
 
-        button = customtkinter.CTkButton(master=app, text="VS Computer", command=self.play_with_computer)
-        button.place(relx=0.5, rely=0.55, anchor=customtkinter.CENTER, height=50)
+        button = customtkinter.CTkButton(master=app, text="VS Computer", command=self.play_with_computer, height=50)
+        button.place(relx=0.5, rely=0.55, anchor=customtkinter.CENTER)
 
         
-        button = customtkinter.CTkButton(master=app, text="Help", command=self.help_function)
-        button.place(relx=0.5, rely=0.7, anchor=customtkinter.CENTER, height=50)
+        button = customtkinter.CTkButton(master=app, text="Help", command=self.help_function, height=50)
+        button.place(relx=0.5, rely=0.7, anchor=customtkinter.CENTER)
 
-        button = customtkinter.CTkButton(master=app, text="Exit", command=self.exit_function)
-        button.place(relx=0.5, rely=0.85, anchor=customtkinter.CENTER,height=50)
-        button.click_animation()
+        button = customtkinter.CTkButton(master=app, text="Exit", command=self.exit_function, height=50)
+        button.place(relx=0.5, rely=0.85, anchor=customtkinter.CENTER)
+        button._click_animation()
 
-        headLabel = customtkinter.CTkLabel(text="Tic Tac Toe",text_font="cmr 40 bold")
+        headLabel = customtkinter.CTkLabel(master=app, text="Tic Tac Toe", font=("cmr", 40))
         headLabel.place(relx=0.5,rely=0.2,anchor=customtkinter.CENTER)
 
 
@@ -536,11 +618,11 @@ class Mainmenu:
         game_instance.mainloop()
 
 
-    def mainloop(self):
-        self.window.mainloop()
+    # def mainloop(self):
+    #     self.window.mainloop()
 
-    def click(self, event):
-        pass
+    # def click(self, event):
+    #     pass
 
 
 menu_instance = Mainmenu()
