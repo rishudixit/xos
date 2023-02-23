@@ -179,8 +179,7 @@ class Tic_Tac_Toe():
         self.X_wins = self.is_winner('X')
         if not self.X_wins:
             self.O_wins = self.is_winner('O')
-
-        if not self.O_wins:
+        if not self.O_wins and not self.X_wins:
             self.tie = self.is_tie()
 
         gameover = self.X_wins or self.O_wins or self.tie
@@ -222,19 +221,17 @@ class Tic_Tac_Toe():
         return (grid_init_line, grid_end_line)
 
     def display_end_line(self):
-        if self.tie:
-            return
-        logical_init_line, logical_end_line = self.find_row_end_line()
-        grid_init_line = self.convert_logical_to_grid_position(logical_init_line)
-        grid_end_line = self.convert_logical_to_grid_position(logical_end_line)
+        if not self.tie:
+            logical_init_line, logical_end_line = self.find_row_end_line()
+            grid_init_line = self.convert_logical_to_grid_position(logical_init_line)
+            grid_end_line = self.convert_logical_to_grid_position(logical_end_line)
 
-        grid_init_line, grid_end_line = self.expand_end_line(logical_init_line, logical_end_line, grid_init_line, grid_end_line)
+            grid_init_line, grid_end_line = self.expand_end_line(logical_init_line, logical_end_line, grid_init_line, grid_end_line)
 
-        self.canvas.create_line(grid_init_line[0], grid_init_line[1], grid_end_line[0], grid_end_line[1], width=10)
-        
+            self.canvas.create_line(grid_init_line[0], grid_init_line[1], grid_end_line[0], grid_end_line[1], width=10)
+
         text = "Click to continue"
         self.canvas.create_text(size_of_board / 2, size_of_board / 2, font="cmr 30 bold", text=text, width=size_of_board, fill=Green_color)
-
 
     def click(self, event):
         grid_position = [event.x, event.y]
@@ -474,7 +471,7 @@ class Tic_Tac_ToeVSComputer():
         if not self.X_wins:
             self.O_wins = self.is_winner('O')
 
-        if not self.O_wins:
+        if not self.O_wins and not self.X_wins:
             self.tie = self.is_tie()
 
         gameover = self.X_wins or self.O_wins or self.tie
@@ -516,19 +513,17 @@ class Tic_Tac_ToeVSComputer():
         return (grid_init_line, grid_end_line)
 
     def display_end_line(self):
-        if self.tie:
-            return
-        logical_init_line, logical_end_line = self.find_row_end_line()
-        grid_init_line = self.convert_logical_to_grid_position(logical_init_line)
-        grid_end_line = self.convert_logical_to_grid_position(logical_end_line)
+        if not self.tie:
+            logical_init_line, logical_end_line = self.find_row_end_line()
+            grid_init_line = self.convert_logical_to_grid_position(logical_init_line)
+            grid_end_line = self.convert_logical_to_grid_position(logical_end_line)
 
-        grid_init_line, grid_end_line = self.expand_end_line(logical_init_line, logical_end_line, grid_init_line, grid_end_line)
+            grid_init_line, grid_end_line = self.expand_end_line(logical_init_line, logical_end_line, grid_init_line, grid_end_line)
 
-        self.canvas.create_line(grid_init_line[0], grid_init_line[1], grid_end_line[0], grid_end_line[1], width=10)
-        
+            self.canvas.create_line(grid_init_line[0], grid_init_line[1], grid_end_line[0], grid_end_line[1], width=10)
+            
         text = "Click to continue"
         self.canvas.create_text(size_of_board / 2, size_of_board / 2, font="cmr 30 bold", text=text, width=size_of_board, fill=Green_color)
-
 
     def click(self, event):
         grid_position = [event.x, event.y]
