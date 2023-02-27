@@ -3,17 +3,46 @@
 
 This repository contains python based interactive Tic-Tac-Toe game.
 
+## Requirements
+
+- python 3.10.4 ou superior
+- python venv 3.10.6-1
+
 ## Running Tic-Tac-Toe:
 
+Clone the repository
 ```
-git clone https://github.com/rishudixit/xos.git
-cd Tic-Tac-Toe
-python main.py
+git clone https://github.com/rishudixit/xos.git <path_name>
 ```
-Or, 
 
+Access the project directory
 ```
-git clone https://github.com/rishudixit/xos.git && cd Tic-Tac-Toe && python main.py
+cd <path_name>
+```
+
+Create a virtual environment
+```
+python3 -m venv venv
+```
+
+Activate the virtual environment<br/>
+Linux / MAC version:
+```
+Source venv/bin/activate
+```
+Windows version:
+```
+venv/Scripts/activate
+```
+
+Install the requirements
+```
+pip install -r requirements.txt
+```
+
+Run the program
+```
+python main.py
 ```
 
 <!-- <p align="center">
